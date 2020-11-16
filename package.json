@@ -32,8 +32,7 @@
     "react-router-dom": "^5.2.0"
   },
   "browserslist": [
-    "last 2 versions",
-    "> 1%"
+    "defaults"
   ],
   "babel": {
     "presets": [

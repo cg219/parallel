@@ -1,0 +1,17 @@
+$base-width: 1600;
+$base-font-size: 16;
+
+@function to-vw($target, $base: $base-width) {
+    @if $target == 0 { @return 0 }
+    @return ($target / ($base / 100)) + 0vw;
+}
+
+@function to-percent($target, $base: $base-width) {
+    @if $target == 0 { @return 0 }
+    @return ($target / ($base / 100)) + 0%;
+}
+
+@function to-rem($target, $base: $base-font-size) {
+    @if $target == 0 { @return 0 }
+    @return $target / $base + 0rem;
+}

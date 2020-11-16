@@ -80,6 +80,9 @@ async function get (req, res) {
     var [name, type] = validateQuery(req.query);
     var data = { success: true };
 
+    res.set('Content-Type', 'application/json');
+    res.set('Access-Control-Allow-Origin', '*');
+
     if (!type) {
         data.success = false;
         data.data = {
