@@ -11,7 +11,13 @@ function Panel (props) {
         purple: styles.Purple,
         pink: styles.Pink,
     }
-    var classes = [styles.Panel, colorMap[color]].join(' ');
+    var rowMap = {
+        '1': styles.Row1,
+        '2': styles.Row2,
+        '3': styles.Row3,
+        '4': styles.Row4
+    }
+    var classes = [styles.Panel, colorMap[color], rowMap[props.row]].join(' ');
 
     useEffect(updateProps, [props]);
 

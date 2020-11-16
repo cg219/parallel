@@ -1,3 +1,17 @@
 @import "reset";
 @import "funcs";
 @import "vars";
+
+:global {
+    body, html {
+        margin: 0;
+        height: 100%;
+    }
+
+    #parallel {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 25%);
+        height: 100%;
+    }
+}

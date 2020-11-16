@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Panel } from './components/panel/component';
+import styles from "./styles";
 
 ReactDOM.render(
     <BrowserRouter>
@@ -11,10 +12,10 @@ ReactDOM.render(
 );
 
 function App (props) {
-    var [home, setHome] = useState({ title: '', body: ' '});
-    var [what, setWhat] = useState({ title: '', body: ' '});
-    var [who, setWho] = useState({ title: '', body: ' '});
-    var [opp, setOpp] = useState({ title: '', body: ' '});
+    var [home, setHome] = useState({ title: '', body: ''});
+    var [what, setWhat] = useState({ title: '', body: ''});
+    var [who, setWho] = useState({ title: '', body: ''});
+    var [opp, setOpp] = useState({ title: '', body: ''});
 
     useEffect(fetchData, []);
 
@@ -33,11 +34,11 @@ function App (props) {
     }
 
     return (
-        <main>
-            <Panel title={home.title} body={home.body} color='purple' />
-            <Panel title={what.title} body={what.body} color='orange' />
-            <Panel title={who.title} body={who.body} color='pink' />
-            <Panel title={opp.title} body={opp.body} color='purple' />
-        </main>
+        <Fragment>
+            <Panel title={home.title} body={home.body} color='purple' row='1' />
+            <Panel title={what.title} body={what.body} color='orange' row='2' />
+            <Panel title={who.title} body={who.body} color='pink' row='3' />
+            <Panel title={opp.title} body={opp.body} color='purple' row='4' />
+        </Fragment>
     )
 }
