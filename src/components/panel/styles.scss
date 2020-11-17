@@ -9,9 +9,9 @@
 }
 
 .Row1 { grid-row: 1 / 2; }
-.Row2 { grid-row: 1 / 2; }
-.Row3 { grid-row: 3 / 2; }
-.Row4 { grid-row: 4 / 2; }
+.Row2 { grid-row: 2 / 3; }
+.Row3 { grid-row: 3 / 4; }
+.Row4 { grid-row: 4 / 5; }
 
 .Orange {
     color: $white;
