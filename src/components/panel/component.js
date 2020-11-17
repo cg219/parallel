@@ -17,7 +17,7 @@ function Panel (props) {
         '3': styles.Row3,
         '4': styles.Row4
     }
-    var classes = [styles.Panel, colorMap[color], rowMap[props.row]].join(' ');
+    var classes = [styles.Panel, colorMap[color]].join(' ');
 
     useEffect(updateProps, [props]);
 

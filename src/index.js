@@ -12,12 +12,27 @@ ReactDOM.render(
 );
 
 function App (props) {
-    var [home, setHome] = useState({ title: '', body: ''});
-    var [what, setWhat] = useState({ title: '', body: ''});
-    var [who, setWho] = useState({ title: '', body: ''});
-    var [opp, setOpp] = useState({ title: '', body: ''});
+    var [home, setHome] = useState({ title: '', body: '', index: 0});
+    var [what, setWhat] = useState({ title: '', body: '', index: 1});
+    var [who, setWho] = useState({ title: '', body: '', index: 2});
+    var [opp, setOpp] = useState({ title: '', body: '', index: 3});
+    var [activePanel, setActivePanel] = useState(0);
+    var [panels, setPanels] = useState([]);
 
+    useEffect(addListeners, []);
     useEffect(fetchData, []);
+
+    function addListeners() {
+        window.addEventListener('scroll', onScroll);
+        window.addEventListener('keyup', onPress);
+
+        return removeListeners;
+    }
+
+    function removeListeners() {
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('keyup', onPress);
+    }
 
     function fetchData() {
         fetch(`https://us-central1-parallel-site.cloudfunctions.net/cms-get?type=pages`)
@@ -31,6 +46,26 @@ function App (props) {
                 setOpp({ title: data.opportunities.title, body: data.opportunities.html })
             })
             .catch(error => console.error(error))
+    }
+
+    function switchPanel (to, dir) {
+
+    }
+
+    function onScroll(event) {
+        console.log('event');
+    }
+
+    function onPress(event) {
+        if (event.key == 'ArrowDown') {
+            console.log('Move Down');
+
+            setActivePanel()
+        }
+
+        if (event.key == 'ArrowUp') {
+            console.log('Move Up');
+        }
     }
 
     return (
