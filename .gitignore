@@ -106,3 +106,4 @@ dist
 #customs
 public/
 .runtimeconfig.json
+.DS_Store
