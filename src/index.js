@@ -1,79 +1,101 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { Panel } from './components/panel/component';
-import styles from "./styles";
+import { vow } from 'batboy.mente';
 
-ReactDOM.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>,
-    document.getElementById('parallel')
-);
+let activePanel = 0;
+let nextPanel;
+let panels = [];
+let isSwitching = false;
+const DIRECTION = {
+    UP: 'up',
+    DOWN: 'down'
+};
 
-function App (props) {
-    var [home, setHome] = useState({ title: '', body: '', index: 0});
-    var [what, setWhat] = useState({ title: '', body: '', index: 1});
-    var [who, setWho] = useState({ title: '', body: '', index: 2});
-    var [opp, setOpp] = useState({ title: '', body: '', index: 3});
-    var [activePanel, setActivePanel] = useState(0);
-    var [panels, setPanels] = useState([]);
+(async function main(){
+    var [res, error] = await vow(fetch('https://us-central1-parallel-site.cloudfunctions.net/cms-get?type=pages'));
 
-    useEffect(addListeners, []);
-    useEffect(fetchData, []);
+    if (res?.ok) {
+        var { data } = await res.json();
 
-    function addListeners() {
-        window.addEventListener('scroll', onScroll);
-        window.addEventListener('keyup', onPress);
+        initSite(data)
+    }
+ })();
 
-        return removeListeners;
+function initSite(siteData) {
+    panels = [
+        document.getElementById('home'),
+        document.getElementById('what-we-do'),
+        document.getElementById('who-we-are'),
+        document.getElementById('opportunities')
+    ];
+
+    panels.forEach(function populatePanel(panel) {
+        panel.querySelector('h1').innerHTML = siteData[panel.id].title;
+        panel.querySelector('div').innerHTML = siteData[panel.id].html;
+    })
+
+    window.addEventListener('keyup', onPress);
+    panels[0].addEventListener('wheel', onWheel);
+}
+
+function getNextPanel(newIndex) {
+    if (newIndex > panels.length - 1) return 0;
+    if (newIndex < 0) return panels.length - 1;
+    return newIndex;
+}
+
+function movePanels(direction) {
+    var current = panels[activePanel];
+    var next = panels[nextPanel];
+
+    current.addEventListener('animationend', function onCurrentAnimationEnd(event) {
+        current.classList.remove('ani-dn-out', 'ani-up-out', 'active');
+        current.removeEventListener('animationend', onCurrentAnimationEnd);
+
+        isSwitching = false;
+    })
+
+    next.addEventListener('animationend', function onNextAnimationEnd(event) {
+        next.classList.remove('ani-dn-in', 'ani-up-in');
+        next.classList.add('active');
+        next.removeEventListener('animationend', onNextAnimationEnd);
+        next.addEventListener('wheel', onWheel);
+
+        isSwitching = false;
+    })
+
+    if (direction == DIRECTION.UP) {
+        current.classList.add('ani-dn-out');
+        next.classList.add('ani-dn-in');
+
     }
 
-    function removeListeners() {
-        window.removeEventListener('scroll', onScroll);
-        window.removeEventListener('keyup', onPress);
+    if (direction == DIRECTION.DOWN) {
+        current.classList.add('ani-up-out');
+        next.classList.add('ani-up-in');
     }
+}
 
-    function fetchData() {
-        fetch(`https://us-central1-parallel-site.cloudfunctions.net/cms-get?type=pages`)
-            .then(response => response.json())
-            .then(response => {
-                let data = response.data;
+function changePanelIndex(direction, index) {
+    nextPanel = getNextPanel(index);
+    movePanels(direction);
+    activePanel = nextPanel;
+}
 
-                setHome({ title: data.home.title, body: data.home.html })
-                setWhat({ title: data['what-we-do'].title, body: data['what-we-do'].html })
-                setWho({ title: data['who-we-are'].title, body: data['who-we-are'].html })
-                setOpp({ title: data.opportunities.title, body: data.opportunities.html })
-            })
-            .catch(error => console.error(error))
-    }
+function onWheel(event) {
+    if (isSwitching) return;
 
-    function switchPanel (to, dir) {
+    isSwitching = true;
+    event.currentTarget.removeEventListener('wheel', onWheel);
 
-    }
+    if (event.deltaY <= -1) return changePanelIndex(DIRECTION.UP, activePanel - 1);
+    if (event.deltaY >= 1) return changePanelIndex(DIRECTION.DOWN, activePanel + 1);
+}
 
-    function onScroll(event) {
-        console.log('event');
-    }
+function onPress(event) {
+    if (event.key != 'ArrowDown' && event.key != 'ArrowUp') return;
+    if (isSwitching == true) return;
 
-    function onPress(event) {
-        if (event.key == 'ArrowDown') {
-            console.log('Move Down');
+    isSwitching = true;
 
-            setActivePanel()
-        }
-
-        if (event.key == 'ArrowUp') {
-            console.log('Move Up');
-        }
-    }
-
-    return (
-        <Fragment>
-            <Panel title={home.title} body={home.body} color='purple' row='1' />
-            <Panel title={what.title} body={what.body} color='orange' row='2' />
-            <Panel title={who.title} body={who.body} color='pink' row='3' />
-            <Panel title={opp.title} body={opp.body} color='purple' row='4' />
-        </Fragment>
-    )
+    if (event.key == 'ArrowDown') return changePanelIndex(DIRECTION.DOWN, activePanel + 1);
+    if (event.key == 'ArrowUp') return changePanelIndex(DIRECTION.UP, activePanel - 1);
 }

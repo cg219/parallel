@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel src/index.html",
-    "build": "parcel build --no-source-maps src/index.html --out-dir public"
+    "build": "parcel build --no-source-maps src/index.html --out-dir public",
+    "build:dev": "parcel build --no-source-maps src/index.html --out-dir public && firebase hosting:channel:deploy dev"
   },
   "repository": {
     "type": "git",
@@ -19,27 +20,18 @@
   },
   "homepage": "https://github.com/cg219/parallel#readme",
   "devDependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/preset-react": "^7.12.5",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-nuke-dist": "^1.0.1",
-    "postcss-modules": "^3.2.2",
     "sass": "^1.29.0"
   },
   "dependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0"
+    "batboy.mente": "^0.1.1"
   },
   "browserslist": [
-    "defaults"
+    "defaults",
+    "not ie <= 11"
   ],
   "babel": {
-    "presets": [
-      "@babel/preset-react"
-    ]
-  },
-  "postcss": {
-    "modules": "true"
+    "presets": []
   }
 }
