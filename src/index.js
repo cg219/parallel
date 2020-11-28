@@ -28,8 +28,8 @@ function initSite(siteData) {
     ];
 
     panels.forEach(function populatePanel(panel) {
-        panel.querySelector('h1').innerHTML = siteData[panel.id].title;
-        panel.querySelector('div').innerHTML = siteData[panel.id].html;
+        panel.querySelector('.title').innerHTML = siteData[panel.id].title;
+        panel.querySelector('.body').innerHTML = siteData[panel.id].html;
     })
 
     window.addEventListener('keyup', onPress);

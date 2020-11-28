@@ -9,7 +9,7 @@ body, html {
     height: 100%;
     overflow: hidden;
     font-family: 'Atlas Grotesk Web';
-    font-size: 16px;
+    font-size: to-vw(16);
 }
 
 #parallel {
@@ -26,11 +26,70 @@ body, html {
     grid-column: 1;
     grid-row: 1 / 2 !important;
     transform: translateY(120%);
+    padding-left: to-rem(175);
+    padding-top: to-rem(150);
 
-    h1 {
+    .title {
         font-weight: 900;
         text-transform: uppercase;
         font-size: to-rem(104);
+        line-height: 1;
+        margin: 0;
+    }
+
+    .body {
+        width: to-rem(860);
+
+        p {
+            font-size: to-rem(19);
+            line-height: 1.68;
+            margin: to-rem(30) 0 0;
+        }
+
+        h3 {
+            font-size: to-rem(22);
+            font-weight: 900;
+            line-height: .86;
+            margin: 0 0 to-rem(9) 0;
+            text-transform: uppercase;
+        }
+
+        ol {
+            list-style: none;
+            counter-reset: nums;
+            padding-left: to-rem(100);
+
+            li {
+                margin-bottom: to-rem(35);
+                font-size: to-rem(15);
+                line-height: 1.6;
+                counter-increment: nums;
+                position: relative;
+
+                &:before {
+                    content: "0" counter(nums);
+                    position: absolute;
+                    top: to-rem(-25);
+                    left: to-rem(-100);
+                    font-size: to-rem(58);
+                    font-weight: 900;
+                    opacity: .45;
+                }
+            }
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                margin-bottom: to-rem(15);
+            }
+        }
+
+        a {
+            color: $white;
+        }
     }
 
     &.orange {
@@ -68,5 +127,63 @@ body, html {
     &.ani-dn-in {
         animation: panelInDown 300ms ease-in both;
         z-index: 100;
+    }
+}
+
+#home {
+    .title { display: none; }
+    .wordmark {
+        width: to-rem(490);
+    }
+    .body {
+        width: to-rem(1010);
+
+        p {
+            font-weight: 300;
+            font-size: to-rem(30);
+            line-height: 1.4;
+        }
+    }
+}
+
+#what-we-do {
+    padding-top: to-rem(120);
+
+    .body {
+        p {
+            margin: to-rem(30) 0 to-rem(60) 0;
+        }
+    }
+}
+
+#who-we-are {
+    padding-top: to-rem(170);
+}
+
+#opportunities {
+    padding-top: to-rem(200);
+
+    .body {
+        h3 {
+            margin: to-rem(40) 0 0;
+        }
+
+        p {
+            margin: to-rem(20) 0 0;
+        }
+
+        ul {
+            margin: to-rem(30) 0 0;
+
+            li {
+                font-weight: 700;
+                font-size: to-rem(19);
+            }
+        }
+
+        hr {
+            margin: to-rem(70) 0;
+            border-color: $pink;
+        }
     }
 }
