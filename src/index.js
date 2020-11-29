@@ -1,6 +1,6 @@
 import { vow } from 'batboy.mente';
 
-let activePanel = 0;
+var activePanel = 0;
 let nextPanel;
 let panels = [];
 let isSwitching = false;
@@ -10,30 +10,91 @@ const DIRECTION = {
 };
 
 (async function main(){
-    var [res, error] = await vow(fetch('https://us-central1-parallel-site.cloudfunctions.net/cms-get?type=pages'));
+    var [res, error] = await vow(fetch('https://us-central1-parallel-site.cloudfunctions.net/cms-get?type=all'));
 
     if (res?.ok) {
         var { data } = await res.json();
 
-        initSite(data)
+        initSite({ siteData: data.pages, settings: data.settings })
     }
  })();
 
-function initSite(siteData) {
+function initSite({siteData, settings}) {
+    var parallel = document.querySelector('#parallel');
+    var template = document.querySelector('#panel-item');
+
     panels = [
-        document.getElementById('home'),
-        document.getElementById('what-we-do'),
-        document.getElementById('who-we-are'),
-        document.getElementById('opportunities')
+        { name: 'home', color: 'purple' },
+        { name: 'what-we-do', color: 'orange' },
+        { name: 'who-we-are', color: 'pink' },
+        { name: 'opportunities', color: 'purple' }
     ];
 
-    panels.forEach(function populatePanel(panel) {
-        panel.querySelector('.title').innerHTML = siteData[panel.id].title;
-        panel.querySelector('.body').innerHTML = siteData[panel.id].html;
+    panels.forEach(function createPanel({name, color}, index) {
+        const panel = document.importNode(template.content, true).firstElementChild;
+
+        if (index == 0) {
+            panel.classList.add('active');
+            panel.addEventListener('wheel', onWheel);
+
+            {
+                let template = document.querySelector('#wordmark-item');
+                let wordmark = document.importNode(template.content, true);
+                panel.prepend(wordmark);
+            }
+        }
+
+        panel.classList.add(color);
+        panel.setAttribute('id', name);
+        panel.querySelector('.title').textContent = siteData[name].title;
+        panel.querySelector('.body').innerHTML = siteData[name].html;
+        parallel.append(panel);
     })
 
+    createTopNav(settings.navigation);
+    createSideNav(settings.navigation);
+
     window.addEventListener('keyup', onPress);
-    panels[0].addEventListener('wheel', onWheel);
+}
+
+function createTopNav(navData) {
+    var nav = document.querySelector('#top-nav ul');
+    var template = document.querySelector('#nav-item');
+
+    navData.forEach(function createTopNavItem({label, url}, index) {
+        if (url != '/') {
+            const item = document.importNode(template.content, true);
+            const aTag = item.querySelector('a');
+
+            aTag.textContent = label;
+            aTag.setAttribute('href', url.replaceAll('/', ''));
+            aTag.setAttribute('data-page-index', index);
+            aTag.addEventListener('click', onNavClick);
+            nav.append(item);
+        }
+    });
+}
+
+function createSideNav(navData) {
+    var nav = document.querySelector('#side-nav ul');
+    var template = document.querySelector('#nav-item');
+
+    navData.forEach(function createSideNavItem({label, url}, index) {
+        const item = document.importNode(template.content, true);
+        const aTag = item.querySelector('a');
+
+        aTag.setAttribute('href', url.replaceAll('/', ''));
+        aTag.setAttribute('data-page-index', index);
+        aTag.addEventListener('click', onNavClick);
+        nav.append(item);
+    });
+
+    {
+        let template = document.querySelector('#wordmark-item');
+        let nav = document.querySelector('#side-nav');
+
+        nav.append(document.importNode(template.content, true));
+    }
 }
 
 function getNextPanel(newIndex) {
@@ -43,8 +104,10 @@ function getNextPanel(newIndex) {
 }
 
 function movePanels(direction) {
-    var current = panels[activePanel];
-    var next = panels[nextPanel];
+    var current = document.querySelector(`#${panels[activePanel].name}`);
+    var next = document.querySelector(`#${panels[nextPanel].name}`);
+
+    document.querySelector('#parallel').setAttribute('data-active-panel', nextPanel);
 
     current.addEventListener('animationend', function onCurrentAnimationEnd(event) {
         current.classList.remove('ani-dn-out', 'ani-up-out', 'active');
@@ -76,8 +139,18 @@ function movePanels(direction) {
 
 function changePanelIndex(direction, index) {
     nextPanel = getNextPanel(index);
+    if (nextPanel == activePanel) return isSwitching = false;
     movePanels(direction);
     activePanel = nextPanel;
+}
+
+function onNavClick(event) {
+    event.preventDefault();
+    if (isSwitching == true) return;
+    isSwitching = true;
+
+    var pageIndex = Number(event.currentTarget.getAttribute('data-page-index'));
+    changePanelIndex(DIRECTION.DOWN, pageIndex);
 }
 
 function onWheel(event) {
