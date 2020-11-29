@@ -9,6 +9,7 @@
 </head>
 
 <body>
+
     <main id="parallel" data-active-panel="0">
         <nav id="top-nav">
             <ul></ul>
@@ -16,6 +17,7 @@
         <nav id="side-nav">
             <ul></ul>
         </nav>
+        <section id="loading"></section>
     </main>
     <template id="nav-item">
         <li>
@@ -24,8 +26,10 @@
     </template>
     <template id="panel-item">
         <section class="panel">
-            <h1 class="title"></h1>
-            <div class="body"></div>
+            <div class="content">
+                <h1 class="title"></h1>
+                <div class="body"></div>
+            </div>
         </section>
     </template>
     <template id="wordmark-item">

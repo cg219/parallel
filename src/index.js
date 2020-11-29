@@ -10,6 +10,7 @@ const DIRECTION = {
 };
 
 (async function main(){
+    buildLoader();
     var [res, error] = await vow(fetch('https://us-central1-parallel-site.cloudfunctions.net/cms-get?type=all'));
 
     if (res?.ok) {
@@ -40,7 +41,7 @@ function initSite({siteData, settings}) {
             {
                 let template = document.querySelector('#wordmark-item');
                 let wordmark = document.importNode(template.content, true);
-                panel.prepend(wordmark);
+                panel.querySelector('.content').prepend(wordmark);
             }
         }
 
@@ -55,6 +56,27 @@ function initSite({siteData, settings}) {
     createSideNav(settings.navigation);
 
     window.addEventListener('keyup', onPress);
+
+    removeLoader();
+}
+
+function buildLoader() {
+    var loading = document.querySelector('#loading');
+    var template = document.querySelector('#wordmark-item');
+    var wordmark = document.importNode(template.content, true);
+
+    loading.append(wordmark);
+}
+
+function removeLoader() {
+    var loading = document.querySelector('#loading');
+
+    loading.classList.add('exit');
+    loading.addEventListener('animationend', function onExitAnimationEnd(event) {
+        loading.removeEventListener('animationend', onExitAnimationEnd);
+
+        document.querySelector('#parallel').removeChild(loading);
+    })
 }
 
 function createTopNav(navData) {
