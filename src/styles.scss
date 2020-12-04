@@ -256,6 +256,8 @@ body, html {
 #side-nav {
     position: absolute;
     top: to-rem(50);
+    // top: 50%;
+    // transform: translateY(-50%);
     left: to-rem(100);
     z-index: 110;
     transition: 200ms opacity ease-out;

@@ -128,6 +128,10 @@ function getNextPanel(newIndex) {
 function movePanels(direction) {
     var current = document.querySelector(`#${panels[activePanel].name}`);
     var next = document.querySelector(`#${panels[nextPanel].name}`);
+    // var nav = document.querySelector('#side-nav');
+
+    // var nextHeight = next.querySelector('.content').clientHeight;
+    // nav.style.height = `${nextHeight}px`;
 
     document.querySelector('#parallel').setAttribute('data-active-panel', nextPanel);
 
