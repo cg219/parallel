@@ -41,6 +41,7 @@ body, html {
                     border-color: $pink;
 
                     &:nth-child(2) { background-color: $pink; }
+                    &:hover { background-color: $pink; }
                 }
             }
         }
@@ -60,6 +61,7 @@ body, html {
                     border-color: $purple;
 
                     &:nth-child(3) { background-color: $purple; }
+                    &:hover { background-color: $purple; }
                 }
             }
         }
@@ -79,6 +81,7 @@ body, html {
                     border-color: $orange;
 
                     &:nth-child(4) { background-color: $orange; }
+                    &:hover { background-color: $orange; }
                 }
             }
         }
@@ -266,6 +269,11 @@ body, html {
         width: to-rem(123);
         height: to-rem(41);
         transition: 200ms opacity ease-out;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 1 !important;
+        }
     }
 
     &:before {
@@ -284,6 +292,7 @@ body, html {
         list-style: none;
         margin: to-rem(140) 0 0;
         padding: 0;
+        cursor: pointer;
 
         li {
             margin-bottom: to-rem(14);
@@ -354,6 +363,7 @@ body, html {
             li {
                 font-weight: 700;
                 font-size: to-rem(19);
+                text-decoration: underline;
             }
         }
 
