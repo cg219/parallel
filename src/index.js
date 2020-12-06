@@ -1,4 +1,5 @@
 import { vow } from 'batboy.mente';
+// import Hammer from './hammer';
 
 var activePanel = 0;
 let nextPanel;
@@ -37,6 +38,7 @@ function initSite({siteData, settings}) {
         if (index == 0) {
             panel.classList.add('active');
             panel.addEventListener('wheel', onWheel);
+            // addSwipe(panel);
 
             {
                 let template = document.querySelector('#wordmark-item');
@@ -85,16 +87,14 @@ function createTopNav(navData) {
     var template = document.querySelector('#nav-item');
 
     navData.forEach(function createTopNavItem({label, url}, index) {
-        if (url != '/') {
-            const item = document.importNode(template.content, true);
-            const aTag = item.querySelector('a');
+        const item = document.importNode(template.content, true);
+        const aTag = item.querySelector('a');
 
-            aTag.textContent = label;
-            aTag.setAttribute('href', url.replaceAll('/', ''));
-            aTag.setAttribute('data-page-index', index);
-            aTag.addEventListener('click', onNavClick);
-            nav.append(item);
-        }
+        aTag.textContent = label;
+        aTag.setAttribute('href', url.replaceAll('/', ''));
+        aTag.setAttribute('data-page-index', index);
+        aTag.addEventListener('click', onNavClick);
+        nav.append(item);
     });
 }
 
@@ -115,8 +115,11 @@ function createSideNav(navData) {
     {
         let template = document.querySelector('#wordmark-item');
         let nav = document.querySelector('#side-nav');
+        let wordmark = document.importNode(template.content, true);
 
-        nav.append(document.importNode(template.content, true));
+        wordmark.firstElementChild.setAttribute('data-page-index', 0);
+        wordmark.firstElementChild.addEventListener('click', onNavClick);
+        nav.append(wordmark);
     }
 }
 
@@ -188,6 +191,13 @@ function movePanels(direction) {
     }
 }
 
+// function addSwipe(element) {
+//     var hammer = new Hammer(element);
+
+//     hammer.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+//     hammer.on('swipe', onSwipe);
+// }
+
 function changePanelIndex(direction, index) {
     nextPanel = getNextPanel(index);
     if (nextPanel == activePanel) return isSwitching = false;
@@ -207,9 +217,14 @@ function onNavClick(event) {
 
 function onHamburgerClick(event) {
     event.preventDefault();
+    event.stopPropagation();
 
     document.querySelector('#hamburger-nav').classList.toggle('open');
 }
+
+// function onSwipe(event) {
+//     console.log(event);
+// }
 
 function onWheel(event) {
     if (isSwitching) return;

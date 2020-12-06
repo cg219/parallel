@@ -100,6 +100,7 @@ body, html {
     transform: translateY(120%);
     padding-left: to-rem(175);
     display: grid;
+    z-index: 100;
 
     .content {
         display: inline;
@@ -188,21 +189,29 @@ body, html {
     }
 
     &.ani-up-out {
-        animation: panelOutUp 250ms ease-in 50ms both;
+        animation: panelOutUp 450ms ease-in 50ms both;
+        z-index: 90;
     }
 
     &.ani-up-in {
-        animation: panelInUp 300ms ease-in both;
+        animation: panelInUp 450ms ease-in-out both;
         z-index: 100;
+
+        .title, .wordmark { animation: slideUp 450ms ease-out both; }
+        .body { animation: slideUp 400ms ease-out 50ms both; }
     }
 
     &.ani-dn-out {
-        animation: panelOutDown 250ms ease-in 50ms both;
+        animation: panelOutDown 450ms ease-in 50ms both;
+        z-index: 90;
     }
 
     &.ani-dn-in {
-        animation: panelInDown 300ms ease-in both;
+        animation: panelInDown 450ms ease-in-out both;
         z-index: 100;
+
+        .title, .wordmark { animation: slideDown 450ms ease-out both; }
+        .body { animation: slideUp 400ms ease-out 50ms both; }
     }
 }
 
@@ -439,6 +448,14 @@ body, html {
                 }
             }
         }
+
+        &.ani-up-out {
+            animation-delay: 125ms;
+        }
+
+        &.ani-dn-out {
+            animation-delay: 125ms;
+        }
     }
 
     #loading {
@@ -461,12 +478,13 @@ body, html {
         height: 100%;
 
         button {
+            box-sizing: content-box;
             position: absolute;
-            left: to-rem(-50);
-            top: to-rem(25);
+            left: to-rem(-70);
+            top: to-rem(5);
             width: to-rem(25);
             height: to-rem(19);
-            padding: 0;
+            padding: to-rem(20);
             background: transparent;
             outline: none;
             border: none;
@@ -474,16 +492,25 @@ body, html {
                 200ms height ease-out,
                 200ms width ease-out;
             z-index: 126;
+            -webkit-tap-highlight-color: transparent;
 
             .lines {
                 background-color: $orange;
                 display: block;
-                width: to-rem(25);
-                height: to-rem(2);
                 position: relative;
-                transition:
-                    200ms background-color ease-out 100ms,
-                    200ms width ease-out;
+
+                .line {
+                    background-color: inherit;
+                    position: absolute;
+                    top: 0;
+                    width: to-rem(25);
+                    height: to-rem(2);
+                    transform-origin: center center;
+                    transform: scaleX(1);
+                    transition:
+                        200ms background-color ease-out 100ms,
+                        200ms transform ease-out;
+                }
 
                 &:before, &:after {
                     content: '';
@@ -555,7 +582,9 @@ body, html {
                 height: to-rem(18);
 
                 .lines {
-                    width: 0;
+                    .line {
+                        transform: scaleX(0);
+                    }
 
                     &:before, &:after {
                         content: '';
@@ -612,6 +641,18 @@ body, html {
 
     #home {
         padding-top: to-rem(65);
+        position: relative;
+
+        &:after {
+            content: '';
+            position: sticky;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(rgba(red($purple), green($purple), blue($purple), 0), $purple 70%);
+            height: to-rem(200);
+            width: 100%;
+            grid-column: 2;
+        }
 
         .wordmark {
             width: 75%;
