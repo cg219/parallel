@@ -21,6 +21,7 @@ body, html {
 
     &[data-active-panel="0"] {
         #top-nav ul li a { color: $orange; }
+        #hamburger-nav button .lines { background-color: $orange; }
         #side-nav {
             opacity: 0;
             pointer-events: none;
@@ -29,6 +30,7 @@ body, html {
 
     &[data-active-panel="1"] {
         #top-nav ul li a { color: $pink; }
+        #hamburger-nav button .lines { background-color: $pink; }
         #side-nav {
             opacity: 1;
             pointer-events: auto;
@@ -49,6 +51,7 @@ body, html {
 
     &[data-active-panel="2"] {
         #top-nav ul li a { color: $purple; }
+        #hamburger-nav button .lines { background-color: $purple; }
         #side-nav {
             opacity: 1;
             pointer-events: auto;
@@ -69,6 +72,7 @@ body, html {
 
     &[data-active-panel="3"] {
         #top-nav ul li a { color: $orange; }
+        #hamburger-nav button .lines { background-color: $orange; }
         #side-nav {
             opacity: 1;
             pointer-events: auto;
@@ -95,8 +99,6 @@ body, html {
     grid-row: 1 / 2 !important;
     transform: translateY(120%);
     padding-left: to-rem(175);
-    // padding-top: to-rem(150);
-    align-content: center;
     display: grid;
 
     .content {
@@ -226,6 +228,8 @@ body, html {
     }
 }
 
+#hamburger-nav { display: none; }
+
 #top-nav {
     position: absolute;
     top: to-rem(40);
@@ -318,6 +322,8 @@ body, html {
 }
 
 #home {
+    padding-top: to-rem(155);
+
     .title { display: none; }
     .wordmark {
         width: to-rem(490);
@@ -334,7 +340,7 @@ body, html {
 }
 
 #what-we-do {
-    // padding-top: to-rem(120);
+    padding-top: to-rem(135);
 
     .body {
         p {
@@ -344,11 +350,11 @@ body, html {
 }
 
 #who-we-are {
-    // padding-top: to-rem(170);
+    padding-top: to-rem(163);
 }
 
 #opportunities {
-    // padding-top: to-rem(200);
+    padding-top: to-rem(192);
 
     .body {
         h3 {
@@ -375,3 +381,288 @@ body, html {
         }
     }
 }
+
+@media (max-width: 768px) {
+    body, html {
+        font-size: to-vw(14, 375);
+    }
+
+    .panel {
+        padding-left: 0;
+        padding-right: 0;
+        grid-template-columns: to-rem(65) auto to-rem(40);
+        overflow-y: visible;
+
+        .title {
+            font-size: to-rem(33);
+        }
+
+        .content {
+            width: 100%;
+            grid-column: 2;
+        }
+
+        .body {
+            width: 100%;
+
+            p {
+                font-size: to-rem(16);
+                line-height: 1.75;
+                margin: to-rem(25) 0 0;
+            }
+
+            h3 {
+                font-size: to-rem(16);
+                line-height: 1.1875;
+                margin: 0 0 to-rem(8) 0;
+            }
+
+            ol {
+                padding-left: 0;
+
+                li {
+                    margin-bottom: to-rem(80);
+                    font-size: to-rem(12);
+                    line-height: 1.66;
+
+                    &:before {
+                        top: to-rem(-50);
+                        left: 0;
+                        font-size: to-rem(28);
+                    }
+                }
+            }
+
+            ul {
+                li {
+                    margin-bottom: to-rem(20);
+                }
+            }
+        }
+    }
+
+    #loading {
+        .wordmark {
+            width: to-rem(200);
+        }
+    }
+
+    #top-nav {
+        display: none;
+    }
+
+    #hamburger-nav {
+        position: absolute;
+        display: block;
+        z-index: 125;
+        top: 0;
+        left: 100%;
+        width: 100%;
+        height: 100%;
+
+        button {
+            position: absolute;
+            left: to-rem(-50);
+            top: to-rem(25);
+            width: to-rem(25);
+            height: to-rem(19);
+            padding: 0;
+            background: transparent;
+            outline: none;
+            border: none;
+            transition:
+                200ms height ease-out,
+                200ms width ease-out;
+            z-index: 126;
+
+            .lines {
+                background-color: $orange;
+                display: block;
+                width: to-rem(25);
+                height: to-rem(2);
+                position: relative;
+                transition:
+                    200ms background-color ease-out 100ms,
+                    200ms width ease-out;
+
+                &:before, &:after {
+                    content: '';
+                    background-color: inherit;
+                    position: absolute;
+                    width: to-rem(25);
+                    height: to-rem(2);
+                    left: 0;
+                    transform-origin: center right;
+                    transition:
+                        200ms background-color ease-out,
+                        250ms transform ease-out,
+                        200ms width ease-out;
+                }
+
+                &:before {
+                    top: to-rem(-8);
+                }
+
+                &:after {
+                    top: to-rem(8);
+                }
+            }
+        }
+
+        ul {
+            list-style: none;
+            display: grid;
+            grid-template-rows: repeat(4, 1fr);
+            grid-template-columns: 1;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            transform: translate(0);
+            transition: 200ms transform ease-out;
+            z-index: 125;
+
+            li {
+                &:nth-child(1) { background-color: $purple; }
+                &:nth-child(2) { background-color: $orange; }
+                &:nth-child(3) { background-color: $pink; }
+                &:nth-child(4) { background-color: $purple; }
+
+                .wordmark {
+                    width: to-rem(242);
+                    height: to-rem(81);
+                }
+
+                a {
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    color: $white;
+                    font-weight: 500;
+                    font-size: to-rem(18);
+                    letter-spacing: to-rem(.47);
+                    width: 100%;
+                    height: 100%;
+                    display: grid;
+                    justify-content: center;
+                    align-content: center;
+                }
+            }
+        }
+
+        &.open {
+            button {
+                width: to-rem(18);
+                height: to-rem(18);
+
+                .lines {
+                    width: 0;
+
+                    &:before, &:after {
+                        content: '';
+                        background-color: $orange !important;
+                        position: absolute;
+                        width: to-rem(22);
+                        height: to-rem(2);
+                        left: 0;
+                    }
+
+                    &:before {
+                        top: to-rem(-8);
+                        transform: rotate(-45deg);
+                    }
+
+                    &:after {
+                        top: to-rem(8);
+                        transform: rotate(45deg);
+                    }
+                }
+            }
+
+            ul {
+                transform: translate(-100%);
+            }
+        }
+    }
+
+    #side-nav {
+        left: to-rem(40);
+
+        .wordmark {
+            left: to-rem(-5);
+            width: to-rem(63);
+            height: to-rem(21);
+        }
+
+        &:before {
+            width: to-rem(2);
+            height: to-rem(87);
+        }
+
+        ul {
+            margin: to-rem(87) 0 0;
+
+            li {
+                margin-bottom: to-rem(8);
+                border: to-rem(2) solid $white;
+                width: to-rem(10);
+                height: to-rem(10);
+            }
+        }
+    }
+
+    #home {
+        padding-top: to-rem(65);
+
+        .wordmark {
+            width: 75%;
+        }
+        .body {
+            width: 100%;
+
+            p {
+                font-size: to-rem(24);
+                line-height: 1.45;
+            }
+        }
+    }
+
+    #what-we-do {
+        padding-top: to-rem(134);
+
+        .body {
+            p {
+                margin: to-rem(25) 0 to-rem(70) 0;
+            }
+        }
+    }
+
+    #who-we-are {
+        padding-top: to-rem(152);
+    }
+
+    #opportunities {
+        padding-top: to-rem(170);
+
+        .body {
+            h3 {
+                margin: to-rem(30) 0 0;
+            }
+
+            p {
+                margin: to-rem(20) 0 0;
+            }
+
+            ul {
+                margin: to-rem(16) 0 0;
+
+                li {
+                    font-size: to-rem(16);
+                }
+            }
+
+            hr {
+                margin: to-rem(40) 0;
+            }
+        }
+    }
+};

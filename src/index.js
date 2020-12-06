@@ -54,6 +54,7 @@ function initSite({siteData, settings}) {
 
     createTopNav(settings.navigation);
     createSideNav(settings.navigation);
+    createHamburgerNav(settings.navigation);
 
     window.addEventListener('keyup', onPress);
 
@@ -119,6 +120,33 @@ function createSideNav(navData) {
     }
 }
 
+function createHamburgerNav(navData) {
+    var nav = document.querySelector('#hamburger-nav ul');
+    var navButton = document.querySelector('#hamburger-nav button');
+    var template = document.querySelector('#nav-item');
+
+    navButton.addEventListener('click', onHamburgerClick);
+
+    navData.forEach(function createSideNavItem({label, url}, index) {
+        const item = document.importNode(template.content, true);
+        const aTag = item.querySelector('a');
+
+        aTag.setAttribute('href', url.replaceAll('/', ''));
+        aTag.setAttribute('data-page-index', index);
+        aTag.addEventListener('click', onNavClick);
+
+        if (url != '/') {
+            aTag.textContent = label;
+        } else {
+            let template = document.querySelector('#wordmark-item');
+
+            aTag.append(document.importNode(template.content, true));
+        }
+
+        nav.append(item);
+    });
+}
+
 function getNextPanel(newIndex) {
     if (newIndex > panels.length - 1) return 0;
     if (newIndex < 0) return panels.length - 1;
@@ -128,12 +156,9 @@ function getNextPanel(newIndex) {
 function movePanels(direction) {
     var current = document.querySelector(`#${panels[activePanel].name}`);
     var next = document.querySelector(`#${panels[nextPanel].name}`);
-    // var nav = document.querySelector('#side-nav');
-
-    // var nextHeight = next.querySelector('.content').clientHeight;
-    // nav.style.height = `${nextHeight}px`;
 
     document.querySelector('#parallel').setAttribute('data-active-panel', nextPanel);
+    next.scroll(0, 0);
 
     current.addEventListener('animationend', function onCurrentAnimationEnd(event) {
         current.classList.remove('ani-dn-out', 'ani-up-out', 'active');
@@ -175,8 +200,15 @@ function onNavClick(event) {
     if (isSwitching == true) return;
     isSwitching = true;
 
+    document.querySelector('#hamburger-nav').classList.remove('open');
     var pageIndex = Number(event.currentTarget.getAttribute('data-page-index'));
     changePanelIndex(DIRECTION.DOWN, pageIndex);
+}
+
+function onHamburgerClick(event) {
+    event.preventDefault();
+
+    document.querySelector('#hamburger-nav').classList.toggle('open');
 }
 
 function onWheel(event) {
