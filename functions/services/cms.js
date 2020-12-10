@@ -15,6 +15,18 @@ function mapContent (acc, content) {
     return acc;
 }
 
+function mapTeam (acc, content) {
+    if (content.primary_tag && content.primary_tag.slug == 'team') {
+        acc[Number(content.meta_title) - 1] = {
+            slug: content.slug,
+            title: content.title,
+            html: content.html
+        }
+    }
+
+    return acc;
+}
+
 function validateQuery (query) {
     var values = [null, null];
     var name = query.name;
@@ -53,16 +65,19 @@ async function save (message) {
     var bucket = storage.bucket(config().storage.bucket);
     var pages = await API.pages.browse();
     var posts = await API.posts.browse();
+    var team = await API.posts.browse({ include: 'tags'});
     var settings = await API.settings.browse();
     var data = new Map();
 
     pages = pages.reduce(mapContent, {});
+    team = team.reduce(mapTeam, []);
     posts = posts.reduce(mapContent, {});
 
     data.set('pages', pages);
     data.set('posts', posts);
+    data.set('team', team);
     data.set('settings', settings);
-    data.set('cms', { pages, posts, settings });
+    data.set('cms', { pages, posts, settings, team });
 
     var saves = [...data].map(function createFile([key, rawData]) {
         let file = bucket.file(`${key}.json`);

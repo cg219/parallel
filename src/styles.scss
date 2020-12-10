@@ -365,6 +365,10 @@ body, html {
 
 #who-we-are {
     padding-top: to-rem(163);
+
+    .body {
+        width: to-rem(600);
+    }
 }
 
 #opportunities {
