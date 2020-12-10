@@ -19,7 +19,8 @@ function mapTeam (acc, content) {
     if (content.primary_tag && content.primary_tag.slug == 'team') {
         acc[Number(content.meta_title) - 1] = {
             slug: content.slug,
-            title: content.title,
+            name: content.title,
+            title: content.custom_excerpt,
             html: content.html
         }
     }

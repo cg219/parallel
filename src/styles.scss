@@ -366,8 +366,75 @@ body, html {
 #who-we-are {
     padding-top: to-rem(163);
 
+    .content {
+        display: grid;
+        justify-content: start;
+        grid-template-rows: min-content auto;
+    }
+
+    .title { grid-row: 1; }
+
     .body {
         width: to-rem(600);
+        grid-row: 2;
+    }
+
+    .team {
+        grid-row: 2;
+        width: to-rem(470);
+        margin-top: to-rem(30);
+    }
+
+    .team-member {
+        overflow: hidden;
+        margin-bottom: to-rem(20);
+
+        header {
+            height: to-rem(55);
+            width: 100%;
+            display: grid;
+            align-items: center;
+            grid-template-columns: max-content max-content auto;
+            background-color: rgba(red($purple), green($purple), blue($purple), .5);
+            position: relative;
+            cursor: pointer;
+
+            .member-name {
+                grid-column: 1;
+                font-weight: 700;
+                font-size: to-rem(20);
+                letter-spacing: to-rem(.9);
+                line-height: to-rem(20);
+                padding-left: to-rem(20);
+                color: $white;
+                user-select: none;
+            }
+
+            .member-title {
+                grid-column: 2;
+                font-weight: 400;
+                font-size: to-rem(16);
+                line-height: to-rem(20);
+                padding-left: to-rem(20);
+                color: $white;
+                user-select: none;
+            }
+
+            .toggle {
+                grid-column: 3;
+                width: to-rem(16);
+                height: to-rem(16);
+                justify-self: end;
+                padding-right: to-rem(20)
+            }
+        }
+
+        section{
+            transform: scaleY(0);
+            height: 0;
+
+            h4 { margin: 0; }
+        }
     }
 }
 

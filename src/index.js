@@ -17,11 +17,11 @@ const DIRECTION = {
     if (res?.ok) {
         var { data } = await res.json();
 
-        initSite({ siteData: data.pages, settings: data.settings })
+        initSite({ siteData: data.pages, settings: data.settings, teamData: data.team })
     }
  })();
 
-function initSite({siteData, settings}) {
+function initSite({siteData, settings, teamData}) {
     var parallel = document.querySelector('#parallel');
     var template = document.querySelector('#panel-item');
 
@@ -57,6 +57,7 @@ function initSite({siteData, settings}) {
     createTopNav(settings.navigation);
     createSideNav(settings.navigation);
     createHamburgerNav(settings.navigation);
+    createTeam(teamData, '#who-we-are');
 
     window.addEventListener('keyup', onPress);
 
@@ -80,6 +81,24 @@ function removeLoader() {
 
         document.querySelector('#parallel').removeChild(loading);
     })
+}
+
+function createTeam(teamData, panelId) {
+    var memberTemplate = document.querySelector('#team-item');
+    var teamTemplate = document.querySelector('#team-container-item');
+    var panel = document.querySelector(panelId);
+    var team = document.importNode(teamTemplate.content, true);
+
+    teamData.forEach(function createMember({slug, name, title, html}) {
+        var member = document.importNode(memberTemplate.content, true);
+
+        member.querySelector('.member-name').textContent = name;
+        member.querySelector('.member-title').textContent = title;
+        member.querySelector('section').innerHTML = html;
+        team.firstElementChild.append(member);
+    });
+
+    panel.querySelector('.content').append(team);
 }
 
 function createTopNav(navData) {
