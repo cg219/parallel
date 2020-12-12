@@ -95,6 +95,8 @@ function createTeam(teamData, panelId) {
         member.querySelector('.member-name').textContent = name;
         member.querySelector('.member-title').textContent = title;
         member.querySelector('section').innerHTML = html;
+        member.querySelector('header').addEventListener('click', onTeamClick);
+        member.firstElementChild.id = slug;
         team.firstElementChild.append(member);
     });
 
@@ -210,13 +212,6 @@ function movePanels(direction) {
     }
 }
 
-// function addSwipe(element) {
-//     var hammer = new Hammer(element);
-
-//     hammer.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
-//     hammer.on('swipe', onSwipe);
-// }
-
 function changePanelIndex(direction, index) {
     nextPanel = getNextPanel(index);
     if (nextPanel == activePanel) return isSwitching = false;
@@ -241,9 +236,18 @@ function onHamburgerClick(event) {
     document.querySelector('#hamburger-nav').classList.toggle('open');
 }
 
-// function onSwipe(event) {
-//     console.log(event);
-// }
+function onTeamClick(event) {
+    var current = event.currentTarget.closest('.team-member');
+    var members = document.querySelector('.team').querySelectorAll('.team-member');
+
+    members.forEach(function removeClass(member) {
+        if (member.id != current.id) {
+            member.classList.remove('open');
+        }
+    });
+
+    current.classList.toggle('open');
+}
 
 function onWheel(event) {
     if (isSwitching) return;

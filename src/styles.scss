@@ -383,11 +383,22 @@ body, html {
         grid-row: 2;
         width: to-rem(470);
         margin-top: to-rem(30);
+        position: relative;
     }
 
     .team-member {
         overflow: hidden;
         margin-bottom: to-rem(20);
+        position: absolute;
+        width: 100%;
+        transition: 300ms top ease-out;
+
+        &:nth-child(1) { top: 0; }
+        &:nth-child(2) { top: to-rem(75); }
+        &:nth-child(3) { top: to-rem(150); }
+        &:nth-child(4) { top: to-rem(225); }
+        &:nth-child(5) { top: to-rem(300); }
+        &:nth-child(6) { top: to-rem(375); }
 
         header {
             height: to-rem(55);
@@ -398,6 +409,7 @@ body, html {
             background-color: rgba(red($purple), green($purple), blue($purple), .5);
             position: relative;
             cursor: pointer;
+            transition: 300ms background-color ease-out;
 
             .member-name {
                 grid-column: 1;
@@ -412,7 +424,7 @@ body, html {
 
             .member-title {
                 grid-column: 2;
-                font-weight: 400;
+                font-weight: 300;
                 font-size: to-rem(16);
                 line-height: to-rem(20);
                 padding-left: to-rem(20);
@@ -425,15 +437,61 @@ body, html {
                 width: to-rem(16);
                 height: to-rem(16);
                 justify-self: end;
-                padding-right: to-rem(20)
+                margin-right: to-rem(20);
+                transform-origin: center center;
+                transition: 300ms transform ease-in-out;
+                position: relative;
+
+                svg { position: absolute; }
             }
         }
 
         section{
             transform: scaleY(0);
-            height: 0;
+            background-color: $purple;
+            height: to-rem(375);
+            padding: to-rem(15) to-rem(20) 0;
+            transform-origin: center top;
+            background-color: rgba(red($purple), green($purple), blue($purple), .5);
+            transition:
+                300ms transform ease-out,
+                300ms background-color ease-out;
 
-            h4 { margin: 0; }
+            h4, h5 {
+                margin: 0;
+                color: $white;
+            }
+
+            h4 {
+                opacity: .5;
+                font-size: to-rem(10);
+                line-height: 1.2;
+                text-transform: uppercase;
+                margin-bottom: to-rem(10);
+            }
+
+            h5 {
+                margin-bottom: to-rem(30);
+                font-size: to-rem(16);
+                line-height: 1.4;
+                font-weight: 300;
+            }
+        }
+
+        &.open {
+            top: 0;
+            z-index: 100;
+
+            header {
+                background-color: $purple;
+
+                .toggle { transform: rotate(45deg); }
+            }
+
+            section {
+                transform: scaleY(1);
+                background-color: $purple;
+            }
         }
     }
 }
@@ -758,6 +816,65 @@ body, html {
 
     #who-we-are {
         padding-top: to-rem(152);
+        grid-template-rows: min-content min-content auto;
+
+        .body {
+            width: to-rem(272);
+        }
+
+        .team {
+            grid-row: 3;
+            width: to-rem(290);
+        }
+
+        .team-member {
+            margin-bottom: to-rem(10);
+
+            &:nth-child(2) { top: to-rem(50); }
+            &:nth-child(3) { top: to-rem(100); }
+            &:nth-child(4) { top: to-rem(150); }
+            &:nth-child(5) { top: to-rem(200); }
+            &:nth-child(6) { top: to-rem(250); }
+
+            header {
+                height: to-rem(38);
+
+                .member-name {
+                    font-size: to-rem(14);
+                    line-height: to-rem(14);
+                    letter-spacing: to-rem(.6);
+                }
+
+                .member-title {
+                    font-size: to-rem(11);
+                    line-height: to-rem(14);
+                }
+
+                .toggle {
+                    width: to-rem(11);
+                    height: to-rem(11);
+                }
+            }
+
+            section {
+                height: to-rem(245);
+                padding: to-rem(10) to-rem(20) 0;
+
+                h4 {
+                    font-size: to-rem(8);
+                    margin-bottom: to-rem(5);
+                }
+
+                h5 {
+                    margin-bottom: to-rem(15);
+                    font-size: to-rem(11);
+                }
+            }
+
+            &.open {
+                top: 0;
+            }
+        }
     }
 
     #opportunities {
