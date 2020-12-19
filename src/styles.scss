@@ -228,13 +228,52 @@ body, html {
     justify-content: center;
     align-content: center;
 
+    .pane {
+        width: 100%;
+        height: 100%;
+        background-color: $orange;
+        position: absolute;
+        z-index: 200;
+        transform: translateY(100%);
+        animation: shuffle 2.5s ease-in-out forwards infinite;
+
+        &:before {
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-color: $purple;
+            transform: translateY(-100%);
+        }
+
+        &:after {
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-color: $pink;
+            transform: translateY(100%);
+        }
+    }
+
     .wordmark {
         width: to-rem(200);
-        animation: pulse 500ms ease-in-out both alternate infinite;
+        z-index: 201;
+        // animation: pulse 500ms ease-in-out both alternate infinite;
     }
 
     &.exit {
-        animation: fadeOut 200ms ease-out 1000ms forwards;
+        animation: fadeOut 250ms ease-out 150ms forwards;
+
+        .pane {
+            background-color: $purple;
+            transform: none;
+        }
+
+        &:before { display: none; }
+        &:after { display: none; }
+
+        .wordmark { animation: fadeOut 200ms ease-out forwards; }
     }
 }
 
@@ -355,6 +394,10 @@ body, html {
 
 #what-we-do {
     padding-top: to-rem(135);
+    background-image: url('assets/plant.png');
+    background-repeat: no-repeat;
+    background-size: 30%;
+    background-position: top to-rem(150) right to-rem(190);
 
     .body {
         p {
@@ -365,6 +408,10 @@ body, html {
 
 #who-we-are {
     padding-top: to-rem(163);
+    background-image: url('assets/head.png');
+    background-repeat: no-repeat;
+    background-size: 15%;
+    background-position: top to-rem(500) left to-rem(150);
 
     .content {
         display: grid;
@@ -382,7 +429,7 @@ body, html {
     .team {
         grid-row: 2;
         width: to-rem(470);
-        margin-top: to-rem(30);
+        margin-top: to-rem(40);
         position: relative;
     }
 
@@ -406,10 +453,16 @@ body, html {
             display: grid;
             align-items: center;
             grid-template-columns: max-content max-content auto;
-            background-color: rgba(red($purple), green($purple), blue($purple), .5);
+            background-color: rgba(red($purple), green($purple), blue($purple));
             position: relative;
             cursor: pointer;
             transition: 300ms background-color ease-out;
+
+            &:hover {
+                .member-name { color: $pink; }
+                .member-title { color: $pink; }
+                .toggle svg path { fill: $pink; }
+            }
 
             .member-name {
                 grid-column: 1;
@@ -420,6 +473,7 @@ body, html {
                 padding-left: to-rem(20);
                 color: $white;
                 user-select: none;
+                transition: 300ms color ease-out;
             }
 
             .member-title {
@@ -430,6 +484,7 @@ body, html {
                 padding-left: to-rem(20);
                 color: $white;
                 user-select: none;
+                transition: 300ms color ease-out;
             }
 
             .toggle {
@@ -442,7 +497,13 @@ body, html {
                 transition: 300ms transform ease-in-out;
                 position: relative;
 
-                svg { position: absolute; }
+                svg {
+                    position: absolute;
+
+                    path {
+                        transition: 300ms fill ease-out;
+                    }
+                }
             }
         }
 
@@ -486,6 +547,12 @@ body, html {
                 background-color: $purple;
 
                 .toggle { transform: rotate(45deg); }
+
+                &:hover {
+                    .member-name { color: $white; }
+                    .member-title { color: $white; }
+                    .toggle svg path { fill: $pink; }
+                }
             }
 
             section {
@@ -498,6 +565,10 @@ body, html {
 
 #opportunities {
     padding-top: to-rem(192);
+    background-image: url('assets/rocks.png');
+    background-repeat: no-repeat;
+    background-size: 25%;
+    background-position: top to-rem(450) right to-rem(200);
 
     .body {
         h3 {
@@ -509,7 +580,7 @@ body, html {
         }
 
         ul {
-            margin: to-rem(30) 0 0;
+            margin: to-rem(30) 0 to-rem(140);
 
             li {
                 // font-weight: 700;
@@ -806,6 +877,9 @@ body, html {
 
     #what-we-do {
         padding-top: to-rem(134);
+        background-size: 40%;
+        background-position: top to-rem(10) left to-rem(30);
+        background-image: none;
 
         .body {
             p {
@@ -817,6 +891,9 @@ body, html {
     #who-we-are {
         padding-top: to-rem(152);
         grid-template-rows: min-content min-content auto;
+        background-size: 25%;
+        background-position: top to-rem(10) left to-rem(30);
+        background-image: none;
 
         .body {
             width: to-rem(272);
@@ -825,6 +902,7 @@ body, html {
         .team {
             grid-row: 3;
             width: to-rem(290);
+            margin-top: to-rem(50);
         }
 
         .team-member {
@@ -879,6 +957,13 @@ body, html {
 
     #opportunities {
         padding-top: to-rem(170);
+        background-size: 40%;
+        background-position: top to-rem(100) left to-rem(55);
+        background-image: none;
+
+        .title {
+            font-size: to-rem(30);
+        }
 
         .body {
             h3 {

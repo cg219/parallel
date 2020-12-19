@@ -48,6 +48,42 @@
     }
 }
 
+@keyframes shuffle {
+    0% {
+        transform: translateY(100%);
+    }
+
+    25% {
+        transform: translateY(100%);
+    }
+
+    35% {
+        transform: translateY(0%);
+    }
+
+    60% {
+        transform: translateY(0%);
+    }
+
+    70% {
+        transform: translateY(-100%);
+    }
+
+    90% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(-200%);
+    }
+}
+
+@keyframes shuffleOut {
+    to {
+        transform: translateY(-100%);
+    }
+}
+
 @keyframes fadeOut {
     100% {
         opacity: 0;

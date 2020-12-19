@@ -74,12 +74,18 @@ function buildLoader() {
 
 function removeLoader() {
     var loading = document.querySelector('#loading');
+    var pane = loading.querySelector('.pane');
 
-    loading.classList.add('exit');
-    loading.addEventListener('animationend', function onExitAnimationEnd(event) {
-        loading.removeEventListener('animationend', onExitAnimationEnd);
+    function onLoadingExit(event) {
+        loading.removeEventListener('animationend', onLoadingExit);
+        // document.querySelector('#parallel').removeChild(loading);
+    }
 
-        document.querySelector('#parallel').removeChild(loading);
+    pane.style.animationIterationCount = 1;
+    pane.addEventListener('animationend', function onExitAnimationEnd(event) {
+        loading.classList.add('exit');
+        pane.removeEventListener('animationend', onExitAnimationEnd);
+        loading.addEventListener('animationend', onLoadingExit);
     })
 }
 
