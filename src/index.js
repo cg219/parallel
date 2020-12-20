@@ -78,7 +78,9 @@ function removeLoader() {
 
     function onLoadingExit(event) {
         loading.removeEventListener('animationend', onLoadingExit);
-        // document.querySelector('#parallel').removeChild(loading);
+
+
+        setTimeout( () => document.querySelector('#parallel').removeChild(loading), 250);
     }
 
     pane.style.animationIterationCount = 1;

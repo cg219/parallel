@@ -263,7 +263,7 @@ body, html {
     }
 
     &.exit {
-        animation: fadeOut 250ms ease-out 150ms forwards;
+        animation: fadeOutDelete 250ms ease-out 150ms forwards;
 
         .pane {
             background-color: $purple;

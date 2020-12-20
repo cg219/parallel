@@ -84,6 +84,17 @@
     }
 }
 
+@keyframes fadeOutDelete {
+    99% {
+        opacity: 0;
+    }
+
+    100% {
+        display: none;
+        pointer-events: none;
+    }
+}
+
 @keyframes fadeOut {
     100% {
         opacity: 0;
