@@ -38,7 +38,6 @@ function initSite({siteData, settings, teamData}) {
         if (index == 0) {
             panel.classList.add('active');
             panel.addEventListener('wheel', onWheel);
-            // addSwipe(panel);
 
             {
                 let template = document.querySelector('#wordmark-item');
@@ -154,7 +153,7 @@ function createSideNav(navData) {
 
 function createHamburgerNav(navData) {
     var nav = document.querySelector('#hamburger-nav ul');
-    var navButton = document.querySelector('#hamburger-nav button');
+    var navButton = document.querySelector('#hamburger-nav-button');
     var template = document.querySelector('#nav-item');
 
     navButton.addEventListener('click', onHamburgerClick);
@@ -233,6 +232,7 @@ function onNavClick(event) {
     isSwitching = true;
 
     document.querySelector('#hamburger-nav').classList.remove('open');
+    document.querySelector('#hamburger-nav-button').classList.remove('open');
     var pageIndex = Number(event.currentTarget.getAttribute('data-page-index'));
     changePanelIndex(DIRECTION.DOWN, pageIndex);
 }
@@ -242,6 +242,7 @@ function onHamburgerClick(event) {
     event.stopPropagation();
 
     document.querySelector('#hamburger-nav').classList.toggle('open');
+    document.querySelector('#hamburger-nav-button').classList.toggle('open');
 }
 
 function onTeamClick(event) {

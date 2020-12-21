@@ -7,6 +7,7 @@
 body, html {
     margin: 0;
     height: 100%;
+    width: 100%;
     overflow: hidden;
     font-family: 'Atlas Grotesk Web';
     font-size: to-vw(16);
@@ -21,7 +22,7 @@ body, html {
 
     &[data-active-panel="0"] {
         #top-nav ul li a { color: $orange; }
-        #hamburger-nav button .lines { background-color: $orange; }
+        #hamburger-nav-button .lines { background-color: $orange; }
         #side-nav {
             opacity: 0;
             pointer-events: none;
@@ -30,7 +31,7 @@ body, html {
 
     &[data-active-panel="1"] {
         #top-nav ul li a { color: $pink; }
-        #hamburger-nav button .lines { background-color: $pink; }
+        #hamburger-nav-button .lines { background-color: $pink; }
         #side-nav {
             opacity: 1;
             pointer-events: auto;
@@ -51,7 +52,7 @@ body, html {
 
     &[data-active-panel="2"] {
         #top-nav ul li a { color: $purple; }
-        #hamburger-nav button .lines { background-color: $purple; }
+        #hamburger-nav-button .lines { background-color: $purple; }
         #side-nav {
             opacity: 1;
             pointer-events: auto;
@@ -72,7 +73,7 @@ body, html {
 
     &[data-active-panel="3"] {
         #top-nav ul li a { color: $orange; }
-        #hamburger-nav button .lines { background-color: $orange; }
+        #hamburger-nav-button .lines { background-color: $orange; }
         #side-nav {
             opacity: 1;
             pointer-events: auto;
@@ -277,6 +278,96 @@ body, html {
     }
 }
 
+#hamburger-nav-button {
+    box-sizing: content-box;
+    position: absolute;
+    right: to-rem(10);
+    top: to-rem(5);
+    width: to-rem(25);
+    height: to-rem(19);
+    padding: to-rem(20);
+    background: transparent;
+    outline: none;
+    border: none;
+    transition:
+        200ms height ease-out,
+        200ms width ease-out;
+    z-index: 126;
+    -webkit-tap-highlight-color: transparent;
+    display: none;
+
+    .lines {
+        background-color: $orange;
+        display: block;
+        position: relative;
+
+        .line {
+            background-color: inherit;
+            position: absolute;
+            top: 0;
+            width: to-rem(25);
+            height: to-rem(2);
+            transform-origin: center center;
+            transform: scaleX(1);
+            transition:
+                200ms background-color ease-out 100ms,
+                200ms transform ease-out;
+        }
+
+        &:before, &:after {
+            content: '';
+            background-color: inherit;
+            position: absolute;
+            width: to-rem(25);
+            height: to-rem(2);
+            left: 0;
+            transform-origin: center right;
+            transition:
+                200ms background-color ease-out,
+                250ms transform ease-out,
+                200ms width ease-out;
+        }
+
+        &:before {
+            top: to-rem(-8);
+        }
+
+        &:after {
+            top: to-rem(8);
+        }
+    }
+
+    &.open {
+        width: to-rem(18);
+        height: to-rem(18);
+
+        .lines {
+            .line {
+                transform: scaleX(0);
+            }
+
+            &:before, &:after {
+                content: '';
+                background-color: $orange !important;
+                position: absolute;
+                width: to-rem(22);
+                height: to-rem(2);
+                left: 0;
+            }
+
+            &:before {
+                top: to-rem(-8);
+                transform: rotate(-45deg);
+            }
+
+            &:after {
+                top: to-rem(8);
+                transform: rotate(45deg);
+            }
+        }
+    }
+}
+
 #hamburger-nav { display: none; }
 
 #top-nav {
@@ -313,8 +404,6 @@ body, html {
 #side-nav {
     position: absolute;
     top: to-rem(50);
-    // top: 50%;
-    // transform: translateY(-50%);
     left: to-rem(100);
     z-index: 110;
     transition: 200ms opacity ease-out;
@@ -489,8 +578,8 @@ body, html {
 
             .toggle {
                 grid-column: 3;
-                width: to-rem(16);
-                height: to-rem(16);
+                width: to-rem(17);
+                height: to-rem(17);
                 justify-self: end;
                 margin-right: to-rem(20);
                 transform-origin: center center;
@@ -604,6 +693,10 @@ body, html {
         font-size: to-vw(14, 375);
     }
 
+    #parallel {
+        width: 100%;
+    }
+
     .panel {
         padding-left: 0;
         padding-right: 0;
@@ -676,73 +769,21 @@ body, html {
         display: none;
     }
 
+    #hamburger-nav-button {
+        display: block;
+    }
+
     #hamburger-nav {
         position: absolute;
         display: block;
         z-index: 125;
         top: 0;
-        left: 100%;
+        left: 0;
         width: 100%;
         height: 100%;
-
-        button {
-            box-sizing: content-box;
-            position: absolute;
-            left: to-rem(-70);
-            top: to-rem(5);
-            width: to-rem(25);
-            height: to-rem(19);
-            padding: to-rem(20);
-            background: transparent;
-            outline: none;
-            border: none;
-            transition:
-                200ms height ease-out,
-                200ms width ease-out;
-            z-index: 126;
-            -webkit-tap-highlight-color: transparent;
-
-            .lines {
-                background-color: $orange;
-                display: block;
-                position: relative;
-
-                .line {
-                    background-color: inherit;
-                    position: absolute;
-                    top: 0;
-                    width: to-rem(25);
-                    height: to-rem(2);
-                    transform-origin: center center;
-                    transform: scaleX(1);
-                    transition:
-                        200ms background-color ease-out 100ms,
-                        200ms transform ease-out;
-                }
-
-                &:before, &:after {
-                    content: '';
-                    background-color: inherit;
-                    position: absolute;
-                    width: to-rem(25);
-                    height: to-rem(2);
-                    left: 0;
-                    transform-origin: center right;
-                    transition:
-                        200ms background-color ease-out,
-                        250ms transform ease-out,
-                        200ms width ease-out;
-                }
-
-                &:before {
-                    top: to-rem(-8);
-                }
-
-                &:after {
-                    top: to-rem(8);
-                }
-            }
-        }
+        box-sizing: border-box;
+        overflow: hidden;
+        pointer-events: none;
 
         ul {
             list-style: none;
@@ -753,8 +794,8 @@ body, html {
             height: 100%;
             padding: 0;
             margin: 0;
-            transform: translate(0);
-            transition: 200ms transform ease-out;
+            transform: translate(100%);
+            transition: 300ms transform ease-out;
             z-index: 125;
 
             li {
@@ -785,38 +826,10 @@ body, html {
         }
 
         &.open {
-            button {
-                width: to-rem(18);
-                height: to-rem(18);
-
-                .lines {
-                    .line {
-                        transform: scaleX(0);
-                    }
-
-                    &:before, &:after {
-                        content: '';
-                        background-color: $orange !important;
-                        position: absolute;
-                        width: to-rem(22);
-                        height: to-rem(2);
-                        left: 0;
-                    }
-
-                    &:before {
-                        top: to-rem(-8);
-                        transform: rotate(-45deg);
-                    }
-
-                    &:after {
-                        top: to-rem(8);
-                        transform: rotate(45deg);
-                    }
-                }
-            }
+            pointer-events: auto;
 
             ul {
-                transform: translate(-100%);
+                transform: translate(0%);
             }
         }
     }
@@ -975,7 +988,7 @@ body, html {
             }
 
             ul {
-                margin: to-rem(16) 0 0;
+                margin: to-rem(16) 0 to-rem(90);
 
                 li {
                     font-size: to-rem(16);
