@@ -578,21 +578,17 @@ body, html {
 
             .toggle {
                 grid-column: 3;
-                width: to-rem(16);
-                height: to-rem(16);
+                font-size: min(#{to-rem(34)}, 34px);
                 justify-self: end;
                 margin-right: to-rem(20);
                 transform-origin: center center;
-                transition: 300ms transform ease-in-out;
+                transition:
+                    300ms transform ease-in-out,
+                    300ms color ease-in-out;
                 position: relative;
-
-                svg {
-                    position: absolute;
-
-                    path {
-                        transition: 300ms fill ease-out;
-                    }
-                }
+                font-family: 'Atlas Grotesk Web';
+                color: $white;
+                font-weight: 700;
             }
         }
 
@@ -640,7 +636,7 @@ body, html {
                 &:hover {
                     .member-name { color: $white; }
                     .member-title { color: $white; }
-                    .toggle svg path { fill: $pink; }
+                    .toggle { color: $pink; }
                 }
             }
 
@@ -909,12 +905,13 @@ body, html {
         background-image: none;
 
         .body {
-            width: to-rem(272);
+            width: 100%;
         }
 
         .team {
             grid-row: 3;
-            width: to-rem(290);
+            width: to-rem(300);
+            // width: 100%;
             margin-top: to-rem(50);
         }
 
@@ -942,8 +939,7 @@ body, html {
                 }
 
                 .toggle {
-                    width: to-rem(11);
-                    height: to-rem(11);
+                    font-size: to-rem(26);
                 }
             }
 
@@ -976,6 +972,7 @@ body, html {
 
         .title {
             font-size: to-rem(30);
+            line-height: 1.15;
         }
 
         .body {
