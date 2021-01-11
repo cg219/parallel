@@ -47,6 +47,8 @@ function initSite({siteData, settings, teamData}) {
         }
 
         panel.classList.add(color);
+        panel.querySelector('.up').addEventListener('click', onUpArrowClick);
+        panel.querySelector('.down').addEventListener('click', onDownArrowClick);
         panel.setAttribute('id', name);
         panel.querySelector('.title').textContent = siteData[name].title;
         panel.querySelector('.body').innerHTML = siteData[name].html;
@@ -95,6 +97,9 @@ function createTeam(teamData, panelId) {
     var teamTemplate = document.querySelector('#team-container-item');
     var panel = document.querySelector(panelId);
     var team = document.importNode(teamTemplate.content, true);
+    var arrows = panel.querySelector('.arrows');
+    var title = panel.querySelector('.title');
+    var body = panel.querySelector('.body');
 
     teamData.forEach(function createMember({slug, name, title, html}) {
         var member = document.importNode(memberTemplate.content, true);
@@ -107,7 +112,9 @@ function createTeam(teamData, panelId) {
         team.firstElementChild.append(member);
     });
 
+    // panel.querySelector('.content').replaceChildren(title, body, team, arrows);
     panel.querySelector('.content').append(team);
+
 }
 
 function createTopNav(navData) {
@@ -276,4 +283,20 @@ function onPress(event) {
 
     if (event.key == 'ArrowDown') return changePanelIndex(DIRECTION.DOWN, activePanel + 1);
     if (event.key == 'ArrowUp') return changePanelIndex(DIRECTION.UP, activePanel - 1);
+}
+
+function onUpArrowClick(event) {
+    if (isSwitching == true) return;
+
+    isSwitching = true;
+
+    return changePanelIndex(DIRECTION.UP, activePanel - 1);
+}
+
+function onDownArrowClick(event) {
+    if (isSwitching == true) return;
+
+    isSwitching = true;
+
+    return changePanelIndex(DIRECTION.DOWN, activePanel + 1);
 }

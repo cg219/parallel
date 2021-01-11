@@ -48,6 +48,28 @@
     }
 }
 
+@keyframes scaleUp {
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes scaleDn {
+    100% {
+        transform: scaleY(0);
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0%);
+    }
+
+    100% {
+        transform: translateY(10%);
+    }
+}
+
 @keyframes shuffle {
     0% {
         transform: translateY(100%);

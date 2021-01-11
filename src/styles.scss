@@ -10,7 +10,7 @@ body, html {
     width: 100%;
     overflow: hidden;
     font-family: 'Atlas Grotesk Web';
-    font-size: to-vw(16);
+    font-size: min(#{to-vw(16)}, 16px);
 }
 
 #parallel {
@@ -168,6 +168,29 @@ body, html {
 
         a {
             color: $white;
+        }
+    }
+
+    .arrows {
+        position: absolute;
+        bottom: to-rem(30);
+        left: to-rem(95);
+
+        .up, .down {
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: min(#{to-rem(26)}, 26px);
+            height: min(#{to-rem(43)}, 43px);
+            cursor: pointer;
+        }
+
+        .up {
+            background-image: url('assets/up-arrow.svg');
+            transform: translateY(#{to-rem(-15)});
+        }
+
+        .down {
+            background-image: url('assets/down-arrow.svg');
         }
     }
 
@@ -464,7 +487,7 @@ body, html {
 }
 
 #home {
-    padding-top: to-rem(155);
+    padding-top: to-rem(130);
 
     .title { display: none; }
     .wordmark {
@@ -479,13 +502,31 @@ body, html {
             line-height: 1.4;
         }
     }
+
+    .arrows {
+        bottom: auto;
+        left: to-rem(175);
+        z-index: 100;
+
+        .up {
+            display: none;
+        }
+
+        .down {
+            width: min(#{to-rem(43)}, 43px);
+            height: min(#{to-rem(72)}, 72px);
+            background-image: url('assets/home-arrow.svg');
+            margin-top: to-rem(40);
+            animation: bounce 400ms ease-in both alternate infinite;
+        }
+    }
 }
 
 #what-we-do {
     padding-top: to-rem(135);
     background-image: url('assets/plant.png');
     background-repeat: no-repeat;
-    background-size: 30%;
+    background-size: min(25%, 500px);
     background-position: top to-rem(150) right to-rem(190);
 
     .body {
@@ -499,8 +540,8 @@ body, html {
     padding-top: to-rem(163);
     background-image: url('assets/head.png');
     background-repeat: no-repeat;
-    background-size: 15%;
-    background-position: top to-rem(450) left to-rem(150);
+    background-size: min(12%, 220px);
+    background-position: top to-rem(490) left to-rem(180);
 
     .content {
         display: grid;
@@ -526,15 +567,23 @@ body, html {
         overflow: hidden;
         margin-bottom: to-rem(20);
         position: absolute;
+        top: 0;
         width: 100%;
-        transition: 300ms top ease-out;
+        transition: 300ms transform ease-out;
 
-        &:nth-child(1) { top: 0; }
-        &:nth-child(2) { top: to-rem(75); }
-        &:nth-child(3) { top: to-rem(150); }
-        &:nth-child(4) { top: to-rem(225); }
-        &:nth-child(5) { top: to-rem(300); }
-        &:nth-child(6) { top: to-rem(375); }
+        &:nth-child(1) { transform: translateY(0); }
+        &:nth-child(2) { transform: translateY(#{to-rem(75)}); }
+        &:nth-child(3) { transform: translateY(#{to-rem(150)}); }
+        &:nth-child(4) { transform: translateY(#{to-rem(225)}); }
+        &:nth-child(5) { transform: translateY(#{to-rem(300)}); }
+        &:nth-child(6) { transform: translateY(#{to-rem(375)}); }
+
+        // &:nth-child(1) { top: 0; }
+        // &:nth-child(2) { top: to-rem(75); }
+        // &:nth-child(3) { top: to-rem(150); }
+        // &:nth-child(4) { top: to-rem(225); }
+        // &:nth-child(5) { top: to-rem(300); }
+        // &:nth-child(6) { top: to-rem(375); }
 
         header {
             height: to-rem(55);
@@ -625,7 +674,7 @@ body, html {
         }
 
         &.open {
-            top: 0;
+            transform: translateY(0);
             z-index: 100;
 
             header {
@@ -652,8 +701,8 @@ body, html {
     padding-top: to-rem(192);
     background-image: url('assets/rocks.png');
     background-repeat: no-repeat;
-    background-size: 25%;
-    background-position: top to-rem(450) right to-rem(200);
+    background-size: min(15%, 350px);
+    background-position: top to-rem(320) right to-rem(220);
 
     .body {
         h3 {
@@ -662,6 +711,10 @@ body, html {
 
         p {
             margin: to-rem(20) 0 0;
+
+            &:nth-of-type(1) {
+                margin-bottom: to-rem(100);
+            }
         }
 
         ul {
@@ -743,6 +796,18 @@ body, html {
                 li {
                     margin-bottom: to-rem(20);
                 }
+            }
+        }
+
+        .arrows {
+            position: relative;
+            bottom: auto;
+            left: to-rem(-25);
+            margin-bottom: to-rem(10);
+
+            .up, .down {
+                width: to-rem(18);
+                height: to-rem(31);
             }
         }
 
@@ -882,6 +947,18 @@ body, html {
                 line-height: 1.45;
             }
         }
+
+        .arrows {
+            position: absolute;
+            bottom: auto;
+            left: to-rem(63);
+
+            .down {
+                width: to-rem(32);
+                height: to-rem(52);
+                margin-top: to-rem(40);
+            }
+        }
     }
 
     #what-we-do {
@@ -894,6 +971,10 @@ body, html {
             p {
                 margin: to-rem(25) 0 to-rem(70) 0;
             }
+        }
+
+        .arrows {
+            transform: translateY(-100%);
         }
     }
 
@@ -908,6 +989,11 @@ body, html {
             width: 100%;
         }
 
+        .arrows {
+            top: to-rem(380);
+            transform: translateY(-100%);
+        }
+
         .team {
             grid-row: 3;
             width: to-rem(300);
@@ -917,12 +1003,13 @@ body, html {
 
         .team-member {
             margin-bottom: to-rem(10);
+            // height: to-rem(38);
 
-            &:nth-child(2) { top: to-rem(50); }
-            &:nth-child(3) { top: to-rem(100); }
-            &:nth-child(4) { top: to-rem(150); }
-            &:nth-child(5) { top: to-rem(200); }
-            &:nth-child(6) { top: to-rem(250); }
+            &:nth-child(2) { transform: translateY(#{to-rem(50)}); }
+            &:nth-child(3) { transform: translateY(#{to-rem(100)}); }
+            &:nth-child(4) { transform: translateY(#{to-rem(150)}); }
+            &:nth-child(5) { transform: translateY(#{to-rem(200)}); }
+            &:nth-child(6) { transform: translateY(#{to-rem(250)}); }
 
             header {
                 height: to-rem(38);
@@ -959,13 +1046,13 @@ body, html {
             }
 
             &.open {
-                top: 0;
+                transform: translateY(0);
             }
         }
     }
 
     #opportunities {
-        padding-top: to-rem(170);
+        padding-top: to-rem(171);
         background-size: 40%;
         background-position: top to-rem(100) left to-rem(55);
         background-image: none;
@@ -973,6 +1060,12 @@ body, html {
         .title {
             font-size: to-rem(30);
             line-height: 1.15;
+        }
+
+        .arrows {
+            transform: translateY(100%);
+
+            .down { display: none }
         }
 
         .body {
