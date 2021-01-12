@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256px" height="256px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <style>
+        @media (prefers-color-scheme: dark) {
+          g {
+            fill: #fff;
+          }
+        }
+    </style>
+    <title>Parallel favicon</title>
+    <g id="Parallel-favicon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(66.000000, 1.000000)" fill="#515070">
+            <polygon id="Fill-1" points="0.06 254 39.834 254 39.834 1.368 0.06 1.368"></polygon>
+            <path d="M103.903,0 C92.949,0 83.986,9.275 83.986,20.611 L83.986,141.317 C83.986,152.652 92.949,161.928 103.903,161.928 C114.859,161.928 123.822,152.652 123.822,141.317 L123.822,20.611 C123.822,9.275 114.859,0 103.903,0" id="Fill-4"></path>
+        </g>
+    </g>
+</svg>

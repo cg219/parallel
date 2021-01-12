@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel src/index.html",
-    "build": "parcel build --no-source-maps src/index.html --out-dir public",
+    "build": "parcel build --no-source-maps src/index.html src/robots.txt src/sitemap.xml --out-dir public && firebase deploy --only hosting",
     "build:dev": "parcel build --no-source-maps src/index.html --out-dir public && firebase hosting:channel:deploy dev"
   },
   "repository": {
