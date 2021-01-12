@@ -173,7 +173,7 @@ body, html {
 
     .arrows {
         position: absolute;
-        bottom: to-rem(30);
+        bottom: to-rem(60);
         left: to-rem(95);
 
         .up, .down {
@@ -803,7 +803,7 @@ body, html {
             position: relative;
             bottom: auto;
             left: to-rem(-25);
-            margin-bottom: to-rem(10);
+            padding-bottom: to-rem(10);
 
             .up, .down {
                 width: to-rem(18);
@@ -974,7 +974,7 @@ body, html {
         }
 
         .arrows {
-            transform: translateY(-100%);
+            // transform: translateY(-100%);
         }
     }
 
@@ -984,6 +984,7 @@ body, html {
         background-size: 25%;
         background-position: top to-rem(10) left to-rem(30);
         background-image: none;
+        margin-bottom: to-rem(-120);
 
         .body {
             width: 100%;
@@ -991,7 +992,7 @@ body, html {
 
         .arrows {
             top: to-rem(380);
-            transform: translateY(-100%);
+            transform: translateY(-50%);
         }
 
         .team {
@@ -1052,7 +1053,7 @@ body, html {
     }
 
     #opportunities {
-        padding-top: to-rem(171);
+        padding-top: to-rem(172);
         background-size: 40%;
         background-position: top to-rem(100) left to-rem(55);
         background-image: none;
@@ -1063,7 +1064,7 @@ body, html {
         }
 
         .arrows {
-            transform: translateY(100%);
+            margin-top: to-rem(100);
 
             .down { display: none }
         }
