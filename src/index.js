@@ -1,10 +1,11 @@
 import { vow } from 'batboy.mente';
-// import Hammer from './hammer';
+// import Hammer from './vendor/hammer';
 
 var activePanel = 0;
 let nextPanel;
 let panels = [];
 let isSwitching = false;
+let eventTimestamp = Date.now();
 const DIRECTION = {
     UP: 'up',
     DOWN: 'down'
@@ -16,6 +17,8 @@ const DIRECTION = {
 
     if (res?.ok) {
         var { data } = await res.json();
+
+        disableTrackPadEvents();
 
         initSite({ siteData: data.pages, settings: data.settings, teamData: data.team })
     }
@@ -202,7 +205,7 @@ function movePanels(direction) {
         current.classList.remove('ani-dn-out', 'ani-up-out', 'active');
         current.removeEventListener('animationend', onCurrentAnimationEnd);
 
-        isSwitching = false;
+        setSwitchingFalse()
     })
 
     next.addEventListener('animationend', function onNextAnimationEnd(event) {
@@ -211,7 +214,7 @@ function movePanels(direction) {
         next.removeEventListener('animationend', onNextAnimationEnd);
         next.addEventListener('wheel', onWheel);
 
-        isSwitching = false;
+        setSwitchingFalse()
     })
 
     if (direction == DIRECTION.UP) {
@@ -228,7 +231,7 @@ function movePanels(direction) {
 
 function changePanelIndex(direction, index) {
     nextPanel = getNextPanel(index);
-    if (nextPanel == activePanel) return isSwitching = false;
+    if (nextPanel == activePanel) return setSwitchingFalse();
     movePanels(direction);
     activePanel = nextPanel;
 }
@@ -267,12 +270,18 @@ function onTeamClick(event) {
 
 function onWheel(event) {
     if (isSwitching) return;
+    if (!wheelThrottlePass(60)) return;
 
-    isSwitching = true;
-    event.currentTarget.removeEventListener('wheel', onWheel);
-
-    if (event.deltaY <= -1) return changePanelIndex(DIRECTION.UP, activePanel - 1);
-    if (event.deltaY >= 1) return changePanelIndex(DIRECTION.DOWN, activePanel + 1);
+    if (event.deltaY <= -1) {
+        isSwitching = true;
+        event.currentTarget.removeEventListener('wheel', onWheel);
+        return changePanelIndex(DIRECTION.UP, activePanel - 1);
+    }
+    if (event.deltaY >= 1) {
+        isSwitching = true;
+        event.currentTarget.removeEventListener('wheel', onWheel);
+        return changePanelIndex(DIRECTION.DOWN, activePanel + 1);
+    }
 }
 
 function onPress(event) {
@@ -299,4 +308,24 @@ function onDownArrowClick(event) {
     isSwitching = true;
 
     return changePanelIndex(DIRECTION.DOWN, activePanel + 1);
+}
+
+function wheelThrottlePass(throttle = 500) {
+    let elapsed = Date.now() - eventTimestamp;
+    let passed = elapsed >= throttle;
+    eventTimestamp = Date.now();
+
+    return passed;
+}
+
+function setSwitchingFalse(amount = 1000) {
+    isSwitching = false;
+    eventTimestamp = Date.now();
+}
+
+function disableTrackPadEvents() {
+    window.addEventListener('wheel', event => {
+        event.preventDefault();
+        return false;
+    }, {passive: false, capture: false})
 }

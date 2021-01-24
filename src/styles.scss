@@ -4,6 +4,10 @@
 @import "vars";
 @import "animations";
 
+* {
+    touch-action: none;
+}
+
 body, html {
     margin: 0;
     height: 100%;
